@@ -1,0 +1,185 @@
+Kode for figur 1:
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def x_1(x):
+    return np.sin(2*np.pi*x)
+
+inngangsSignal = x_1(1)
+AMax = x_1(0.2)
+AMin = x_1(0.8)
+
+x_verdier = np.linspace(-1, 2, 1000)
+
+plt.plot(x_verdier, x_1(x_verdier), color="r", label = "$v_1(t)$")
+plt.plot(x_verdier, 0.2*x_1(x_verdier), color="y", label = "$A_{max}v_1(t)$")
+plt.plot(x_verdier, 0.7*x_1(x_verdier), color="C1", label = "$A_{min}v_1(t)$")
+plt.xlabel("Tid [s]", fontsize=12)
+plt.ylabel("Spenning [V]", fontsize=12)
+plt.title("Ønsket oppførsel på nivåregulatoren sett i oscilloskop", fontsize=14)
+plt.xticks([-1, 0, 1, 2])
+plt.yticks([-1, -0.5, 0, 0.5, 1])
+plt.legend(fontsize=12)
+plt.savefig("Ønsket oppførsel")
+
+Kode for figur 5:
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def A_min1(x):
+    return x**2-x
+
+def A_min2(x):
+    return -x**2+2*x-1
+
+xVerdier = np.linspace(0,1,1000)
+
+yVerdier1 = A_min1(xVerdier)
+yVerdier2 = A_min2(xVerdier)
+
+plt.plot(xVerdier, yVerdier1, label="A: $A_{min}^2-A_{min}$")
+plt.plot(xVerdier, yVerdier2, label="B: $-A_{min}^2+2A_{min}-1$")
+plt.title("Evaluering av $R_2$ i konfigurasjon A og B")
+plt.plot(0.5,-0.25, 'o')
+plt.annotate("Krysningspunkt (0.5, -0.25)", (0.5, -0.325))
+plt.xlabel("Verdier for $A_{min}$", fontsize = 12)
+plt.xticks([0,0.5,1])
+plt.ylabel("Uttrykkets verdi", fontsize=12)
+plt.yticks([-1, -0.5, 0])
+plt.legend()
+plt.savefig("Evaluering av A_min")
+
+Kode for figur 10:
+
+import numpy as np
+import matplotlib.pyplot as plt
+import csv
+
+header = []
+data1 = []
+filename1 = 'Amax final version.csv'
+
+with open(filename1) as csvfile:
+    csvreader = csv.reader(csvfile)
+
+    header = next(csvreader)
+
+    for datapoint in csvreader:
+        values = [float(value) for value in datapoint]
+        data1.append(values)
+
+time = [(p[0]) for p in data1]
+ch1 = [(p[1]) for p in data1]
+ch2 = [(p[2]) for p in data1]
+m = 10**3
+ch2 = [i*m for i in ch2]
+time = [i*m for i in time]
+
+
+plt.plot(time, ch2, label="$A_{max}v_1(t)$", color="y")
+plt.grid(True)
+plt.xticks([-2,-1,0,1,2])
+plt.yticks([-50, -25, 0, 25, 50])
+plt.xlabel("Tid [ms]", fontsize=12)
+plt.ylabel("Spenning [mV]", fontsize=12)
+plt.title("Oscilloskop over $A_{max}v_1(t)$", fontsize=14)
+plt.xlim(-1,1)
+plt.plot(-0.75, 44.5,  "o")
+plt.legend(loc='upper right', fontsize=12)
+plt.annotate('44.588 mV', [-0.65, 44.588], fontsize=10)
+plt.savefig("A_max final version plott")
+
+kode for figur 11:
+
+import numpy as np
+import matplotlib.pyplot as plt
+import csv
+
+header = []
+data1 = []
+filename1 = 'Amin final version.csv'
+
+with open(filename1) as csvfile:
+    csvreader = csv.reader(csvfile)
+
+    header = next(csvreader)
+
+    for datapoint in csvreader:
+        values = [float(value) for value in datapoint]
+        data1.append(values)
+
+time = [(p[0]) for p in data1]
+ch1 = [(p[1]) for p in data1]
+ch2 = [(p[2]) for p in data1]
+m = 10**3
+time = [i*m for i in time]
+
+plt.plot(time, ch2, label="$A_{min}v_1(t)$", color="C1")
+plt.grid(True)
+plt.xticks([-2,-1,0,1,2])
+plt.yticks([-0.75, -0.37, 0, 0.37, 0.75])
+plt.xlabel("Tid [ms]", fontsize=12)
+plt.ylabel("Spenning [V]", fontsize=12)
+plt.title("Oscilloskop over $A_{min}v_1(t)$", fontsize=14)
+plt.xlim(-1,1)
+plt.plot(-0.75, 0.70713,  "o")
+plt.legend(loc='upper right', fontsize=12)
+plt.annotate('0.70713 V', [-0.6, 0.69143], fontsize=10)
+plt.savefig("A_min final version plott")
+
+kode for figur 12:
+
+import numpy as np
+import matplotlib.pyplot as plt
+import csv
+
+header = []
+data1 = []
+data2 = []
+filename1 = 'Amax final version.csv'
+filename2 = 'Amin final version.csv'
+
+with open(filename1) as csvfile:
+    csvreader = csv.reader(csvfile)
+
+    header = next(csvreader)
+
+    for datapoint in csvreader:
+        values = [float(value) for value in datapoint]
+        data1.append(values)
+
+with open(filename2) as csvfile:
+    csvreader = csv.reader(csvfile)
+
+    header2 = next(csvreader)
+
+    for datapoint in csvreader:
+        values = [float(value) for value in datapoint]
+        data2.append(values)
+
+time1 = [(p[0]) for p in data1]
+ch11 = [(p[1]) for p in data1]
+ch21 = [(p[2]) for p in data1]
+
+time2 = [(p[0]) for p in data2]
+ch12 = [(p[1]) for p in data2]
+ch22 = [(p[2]) for p in data2]
+
+m = 10**3
+time1 = [i*m for i in time1]
+time2 = [i*m for i in time2]
+
+plt.plot(time1, ch11, color="r", label="$v_1(t)$")
+plt.plot(time2, ch22, color="C1", label="$A_{min}v_1(t)$")
+plt.plot(time1, ch21, color="y", label="$A_{max}v_1(t)$")
+plt.legend(loc='upper right', fontsize=12)
+plt.ylabel("Spenning [V]", fontsize=12)
+plt.xlabel("Tid [ms]", fontsize=12)
+plt.title("Sammenligning av $v_1(t)$, $A_{max}v_1(t)$ og $A_{min}v_1(t)$", fontsize=14)
+plt.xlim(-1,1)
+plt.xticks([-1, 0, 1])
+plt.yticks([-1, -0.5, 0, 0.5, 1])
+plt.savefig("Sammenligning av alle signalene ferdig versjon")
+
